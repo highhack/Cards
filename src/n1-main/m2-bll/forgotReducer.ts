@@ -7,14 +7,14 @@ const initialState: InitialStateType = {
     status: 'idle',
     error: null,
     isInitialized: true,
-    email: null,
+    forgotPassword: false,
 }
 
 //Reducer
 export const forgotReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'CARDS/FORGOT-PASSWOR':
-            return {...state, email: action.email}
+            return {...state, forgotPassword: action.forgotPassword}
         case 'CARDS/SET-APP-STATUS':
             return {...state, status: action.status}
         case 'CARDS/SET-APP-ERROR':
@@ -25,9 +25,9 @@ export const forgotReducer = (state: InitialStateType = initialState, action: Ac
 }
 
 // actions
-const forgotPasswordAC = (email: string) => ({
+const forgotPasswordAC = (forgotPassword: boolean) => ({
     type: 'CARDS/FORGOT-PASSWOR',
-    email
+    forgotPassword
 } as const)
 
 const setAppStatusAC = (status: RequestStatusType) => ({
@@ -45,14 +45,14 @@ const setAppErrorAC = (error: string | null) => ({
 export const forgotPasswordTC = (email: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
+        dispatch(forgotPasswordAC(true))
         cardAPI.forgotPassword(email)
             .then((res: any) => {
-                dispatch(forgotPasswordAC(res.data))
+                dispatch(forgotPasswordAC(false))
             }).catch(e => {
             dispatch(setAppErrorAC(e))
         }).finally(() => dispatch(setAppStatusAC('failed'))
         )
-
     }
 }
 
@@ -74,6 +74,6 @@ type InitialStateType = {
     error: string | null
     // true when the application was initialized (checked the user, got the settings, etc.)
     isInitialized: boolean
-
-    email: null | string
+    //  true if user forgot password
+    forgotPassword: boolean
 }

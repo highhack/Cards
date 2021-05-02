@@ -12,7 +12,10 @@ const instance = axios.create({
 
 export const cardAPI = {
     forgotPassword(email: string,) {
-        return instance.post('auth/forgot', {email,from:"nya-admin@nya.nya",message:""});
+        const message = `<div style="background-color: lime; padding: 15px"> password recovery link: <a href='https://highhack.github.io/Page4/$token$'> link</a></div>`
+        const from = "test-front-admin <ai73a@yandex.by>"
+        return instance.post('auth/forgot', {email,from,message});
     },
 }
+
 
