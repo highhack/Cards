@@ -50,15 +50,16 @@ export const forgotPasswordTC = (email: string) => {
         cardAPI.forgotPassword(email)
             .then((res: any) => {
                 debugger
-                dispatch(forgotPasswordAC(false))
+                dispatch(setAppStatusAC('succeeded'))
             }).catch(e => {
             const error = e.response?e.response.data.error:(e.message + ', more details in the console');
-            console.log(error)
-            console.dir(error)
             debugger
             dispatch(setAppErrorAC(error))
-        }).finally(() => dispatch(setAppStatusAC('failed'))
-        )
+            dispatch(setAppStatusAC('failed'))
+        }).finally(()=>{
+            dispatch(forgotPasswordAC(false))
+        }
+     )
     }
 }
 
