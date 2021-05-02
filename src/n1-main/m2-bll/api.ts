@@ -11,8 +11,8 @@ const instance = axios.create({
 })
 
 export const cardAPI = {
-    createTask(email: string, from: string, message:string) {
-        return instance.post('auth/forgot', {email,from,message});
+    forgotPassword(email: string,) {
+        return instance.post('auth/forgot', {email,from:"nya-admin@nya.nya",message:""});
     },
 }
 
