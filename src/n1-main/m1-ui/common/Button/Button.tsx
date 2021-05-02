@@ -43,6 +43,7 @@ export const Button: React.FC<ButtonProps> = ({
 
     return (
         <button
+
             type="button"
             onClick={afterPush}
             className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}

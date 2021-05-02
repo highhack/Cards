@@ -43,14 +43,20 @@ const setAppErrorAC = (error: string | null) => ({
 
 // thunks
 export const forgotPasswordTC = (email: string) => {
+    debugger
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         dispatch(forgotPasswordAC(true))
         cardAPI.forgotPassword(email)
             .then((res: any) => {
+                debugger
                 dispatch(forgotPasswordAC(false))
             }).catch(e => {
-            dispatch(setAppErrorAC(e))
+            const error = e.response?e.response.data.error:(e.message + ', more details in the console');
+            console.log(error)
+            console.dir(error)
+            debugger
+            dispatch(setAppErrorAC(error))
         }).finally(() => dispatch(setAppStatusAC('failed'))
         )
     }
